@@ -1,3 +1,6 @@
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod';
+import { relations } from 'drizzle-orm';
+import { z } from 'zod';
 import {
   AnyPgColumn,
   boolean,
@@ -19,9 +22,6 @@ export const users = pgTable('users', {
   imageUrl: text('image_url'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 
-  passwordId: uuid('password_id').references((): AnyPgColumn => passwords.id, {
-    onDelete: 'set null',
-  }),
   primaryEmailAddressId: uuid('primary_email_address_id').references(
     (): AnyPgColumn => emailAddresses.id,
     { onDelete: 'set null' }
@@ -34,9 +34,9 @@ export const users = pgTable('users', {
 
 export const emailAddresses = pgTable('email_addresses', {
   id: uuid('id').primaryKey().defaultRandom(),
+  clerkId: text('clerk_id').notNull().unique(),
   emailAddress: text('email_address').notNull().unique(),
   verified: boolean('verified').notNull().default(false),
-  verifiedAt: timestamp('verified_at'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 
   userId: uuid('user_id')
@@ -46,24 +46,13 @@ export const emailAddresses = pgTable('email_addresses', {
 
 export const phoneNumbers = pgTable('phone_numbers', {
   id: uuid('phone_numbers').primaryKey().defaultRandom(),
+  clerkId: text('clerk_id').notNull().unique(),
   phoneNumber: text('phone_numbers').notNull().unique(),
   verified: boolean('verified').notNull().default(false),
-  verifiedAt: timestamp('verified_at'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 
   userId: uuid('user_id')
     .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
-});
-
-export const passwords = pgTable('passwords', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  hash: text('hash').notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-
-  userId: uuid('user_id')
-    .notNull()
-    .unique()
     .references(() => users.id, { onDelete: 'cascade' }),
 });
 
@@ -167,3 +156,116 @@ export const reelTags = pgTable(
     unq: unique('reel_tag').on(t.reelId, t.tagId),
   })
 );
+
+export const usersRelations = relations(users, ({ one, many }) => ({
+  profile: one(profiles),
+  emailAddresses: many(emailAddresses),
+  phoneNumbers: many(phoneNumbers),
+  primaryEmailAddress: one(emailAddresses, {
+    fields: [users.primaryEmailAddressId],
+    references: [emailAddresses.id],
+  }),
+  primaryPhoneNumber: one(phoneNumbers, {
+    fields: [users.primaryPhoneNumberId],
+    references: [phoneNumbers.id],
+  }),
+}));
+
+export const emailAddressesRelations = relations(emailAddresses, ({ one }) => ({
+  user: one(users, { fields: [emailAddresses.userId], references: [users.id] }),
+}));
+
+export const phoneNumbersRelations = relations(phoneNumbers, ({ one }) => ({
+  user: one(users, { fields: [phoneNumbers.userId], references: [users.id] }),
+}));
+
+export const profilesRelations = relations(profiles, ({ one }) => ({
+  user: one(users, { fields: [profiles.userId], references: [users.id] }),
+  address: one(addresses, {
+    fields: [profiles.addressId],
+    references: [addresses.id],
+  }),
+}));
+
+export const profileSkillsRelations = relations(profileSkills, ({ one }) => ({
+  profile: one(profiles, {
+    fields: [profileSkills.profileId],
+    references: [profiles.id],
+  }),
+  skill: one(skills, {
+    fields: [profileSkills.skillId],
+    references: [skills.id],
+  }),
+}));
+
+export const reelsRelations = relations(reels, ({ one, many }) => ({
+  tags: many(reelTags),
+  likes: many(likes),
+  user: one(users, { fields: [reels.userId], references: [users.id] }),
+}));
+
+export const selectUserSchema = createSelectSchema(users);
+export const insertUserSchema = createInsertSchema(users);
+
+export const selectEmailAddressSchema = createSelectSchema(emailAddresses);
+export const insertEmailAddressSchema = createInsertSchema(emailAddresses);
+
+export const selectPhoneNumberSchema = createSelectSchema(phoneNumbers);
+export const insertPhoneNumberSchema = createInsertSchema(phoneNumbers);
+
+export const selectProfileSchema = createSelectSchema(profiles);
+export const insertProfileSchema = createInsertSchema(profiles);
+
+export const selectReelSchema = createSelectSchema(reels);
+export const insertReelSchema = createInsertSchema(reels);
+
+export const selectLikeSchema = createSelectSchema(likes);
+export const insertLikeSchema = createInsertSchema(likes);
+
+export const selectSkillSchema = createSelectSchema(skills);
+export const insertSkillSchema = createInsertSchema(skills);
+
+export const selectTagSchema = createSelectSchema(tags);
+export const insertTagSchema = createInsertSchema(tags);
+
+export const selectAddressSchema = createSelectSchema(addresses);
+export const insertAddressSchema = createInsertSchema(addresses);
+
+export const selectReelTagSchema = createSelectSchema(reelTags);
+export const insertReelTagSchema = createInsertSchema(reelTags);
+
+export const selectProfileSkillSchema = createSelectSchema(profileSkills);
+export const insertProfileSkillSchema = createInsertSchema(profileSkills);
+
+export type User = z.infer<typeof selectUserSchema>;
+export type NewUser = z.infer<typeof insertUserSchema>;
+
+export type EmailAddress = z.infer<typeof selectEmailAddressSchema>;
+export type NewEmailAddress = z.infer<typeof insertEmailAddressSchema>;
+
+export type PhoneNumber = z.infer<typeof selectPhoneNumberSchema>;
+export type NewPhoneNumber = z.infer<typeof insertPhoneNumberSchema>;
+
+export type Profile = z.infer<typeof selectProfileSchema>;
+export type NewProfile = z.infer<typeof insertProfileSchema>;
+
+export type Skill = z.infer<typeof selectSkillSchema>;
+export type NewSkill = z.infer<typeof insertSkillSchema>;
+
+export type ProfileSkill = z.infer<typeof selectProfileSkillSchema>;
+export type NewProfileSkill = z.infer<typeof insertProfileSkillSchema>;
+
+export type Reel = z.infer<typeof selectReelSchema>;
+export type NewReel = z.infer<typeof insertReelSchema>;
+
+export type Tag = z.infer<typeof selectTagSchema>;
+export type NewTag = z.infer<typeof insertTagSchema>;
+
+export type ReelTag = z.infer<typeof selectReelTagSchema>;
+export type NewReelTag = z.infer<typeof insertReelTagSchema>;
+
+export type Like = z.infer<typeof selectLikeSchema>;
+export type NewLike = z.infer<typeof insertLikeSchema>;
+
+export type Address = z.infer<typeof selectAddressSchema>;
+export type NewAddress = z.infer<typeof insertAddressSchema>;

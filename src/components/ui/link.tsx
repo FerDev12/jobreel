@@ -16,7 +16,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     <NextLink
       ref={ref}
       className={cn(
-        'focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2',
+        'focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 transition-colors hover:text-brand',
         className
       )}
       {...props}

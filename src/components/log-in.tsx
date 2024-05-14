@@ -1,3 +1,5 @@
+'use client';
+
 import * as Clerk from '@clerk/elements/common';
 import * as ClerkSignIn from '@clerk/elements/sign-in';
 import {
@@ -13,12 +15,13 @@ import { Separator } from './ui/separator';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { LinkButton } from './ui/link-button';
 import { OTPInput } from './ui/otp-input';
+import { Link } from './ui/link';
+import { Logo } from './icons/logo';
 
 export function LogIn() {
   return (
-    <ClerkSignIn.Root>
+    <ClerkSignIn.Root path={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL}>
       <Clerk.GlobalError>
         {({ message }: any) => console.log(message)}
       </Clerk.GlobalError>
@@ -27,16 +30,25 @@ export function LogIn() {
         {(GlobalIsLoading) => (
           <>
             <ClerkSignIn.Step name='start'>
-              <Card>
-                <CardHeader>
+              <Card className='max-w-lg w-full'>
+                <CardHeader className='items-center'>
+                  <Logo className='mb-4' />
                   <CardTitle>Log in</CardTitle>
+                  <CardDescription>
+                    To continue to your account.
+                  </CardDescription>
                 </CardHeader>
 
-                <CardContent className='space-y-4'>
+                <CardContent className='space-y-6'>
                   <div className='space-y-2'>
                     <OAuthButton
-                      provider='facebook'
-                      name='Facebook'
+                      provider='apple'
+                      name='Apple'
+                      disabled={GlobalIsLoading}
+                    />
+                    <OAuthButton
+                      provider='google'
+                      name='Google'
                       disabled={GlobalIsLoading}
                     />
                     <OAuthButton
@@ -45,13 +57,8 @@ export function LogIn() {
                       disabled={GlobalIsLoading}
                     />
                     <OAuthButton
-                      provider='google'
-                      name='Goolge'
-                      disabled={GlobalIsLoading}
-                    />
-                    <OAuthButton
-                      provider='apple'
-                      name='Apple'
+                      provider='facebook'
+                      name='Facebook'
                       disabled={GlobalIsLoading}
                     />
                   </div>
@@ -59,12 +66,12 @@ export function LogIn() {
                   <div className='relative'>
                     <Separator />
 
-                    <span className='absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 px-1 py-0.5 rounded-full bg-background'>
+                    <span className='absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-full bg-background text-sm text-muted-foreground'>
                       Or continue with
                     </span>
                   </div>
 
-                  <Clerk.Field name='identifier'>
+                  <Clerk.Field name='identifier' className='space-y-2'>
                     <Clerk.Label asChild>
                       <Label>Email Address</Label>
                     </Clerk.Label>
@@ -86,7 +93,7 @@ export function LogIn() {
                   </Clerk.Field>
                 </CardContent>
 
-                <CardFooter>
+                <CardFooter className='flex-col items-start space-y-2'>
                   <ClerkSignIn.Action submit asChild>
                     <Clerk.Loading>
                       {(loading) => (
@@ -94,6 +101,7 @@ export function LogIn() {
                           variant='brand'
                           loading={loading}
                           disabled={GlobalIsLoading}
+                          className='w-full'
                         >
                           Continue
                         </Button>
@@ -101,14 +109,12 @@ export function LogIn() {
                     </Clerk.Loading>
                   </ClerkSignIn.Action>
 
-                  <LinkButton
-                    size='sm'
-                    variant='link'
+                  <Link
                     href='/sign-up'
-                    className='px-0'
+                    className='text-muted-foreground font-normal hover:text-brand transition-colors'
                   >
                     Don&apos;t have an account?
-                  </LinkButton>
+                  </Link>
                 </CardFooter>
               </Card>
             </ClerkSignIn.Step>
@@ -188,28 +194,6 @@ export function LogIn() {
                       </Clerk.Loading>
                     </ClerkSignIn.Action>
                   </CardFooter>
-                </Card>
-              </ClerkSignIn.Strategy>
-
-              <ClerkSignIn.Strategy name='password'>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>
-                      Enter the password for <ClerkSignIn.SafeIdentifier />.
-                    </CardTitle>
-                  </CardHeader>
-
-                  <CardContent>
-                    <Clerk.Field name='password'>
-                      <Clerk.Label asChild>
-                        <Label>Password</Label>
-                      </Clerk.Label>
-
-                      <Clerk.Input type='password' required asChild>
-                        <Input />
-                      </Clerk.Input>
-                    </Clerk.Field>
-                  </CardContent>
                 </Card>
               </ClerkSignIn.Strategy>
             </ClerkSignIn.Step>
