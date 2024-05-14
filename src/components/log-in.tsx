@@ -35,6 +35,16 @@ export function LogIn() {
                 <CardContent className='space-y-4'>
                   <div className='space-y-2'>
                     <OAuthButton
+                      provider='facebook'
+                      name='Facebook'
+                      disabled={GlobalIsLoading}
+                    />
+                    <OAuthButton
+                      provider='linkedin'
+                      name='LinkedIn'
+                      disabled={GlobalIsLoading}
+                    />
+                    <OAuthButton
                       provider='google'
                       name='Goolge'
                       disabled={GlobalIsLoading}
