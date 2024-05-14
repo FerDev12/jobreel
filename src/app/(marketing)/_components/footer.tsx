@@ -1,9 +1,9 @@
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
-import { Separator } from '../ui/separator';
-import { Logo } from '../icons/logo';
+import { Separator } from '@/components/ui/separator';
+import { Logo } from '@/components/icons/logo';
 import { ReactNode } from 'react';
-import { Link } from '../ui/link';
-import { LinkButton } from '../ui/link-button';
+import { Link } from '@/components/ui/link';
+import { LinkButton } from '@/components/ui/link-button';
 
 const navigationLinks = [
   {

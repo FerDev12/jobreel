@@ -179,12 +179,13 @@ export const phoneNumbersRelations = relations(phoneNumbers, ({ one }) => ({
   user: one(users, { fields: [phoneNumbers.userId], references: [users.id] }),
 }));
 
-export const profilesRelations = relations(profiles, ({ one }) => ({
+export const profilesRelations = relations(profiles, ({ one, many }) => ({
   user: one(users, { fields: [profiles.userId], references: [users.id] }),
   address: one(addresses, {
     fields: [profiles.addressId],
     references: [addresses.id],
   }),
+  skills: many(profileSkills),
 }));
 
 export const profileSkillsRelations = relations(profileSkills, ({ one }) => ({

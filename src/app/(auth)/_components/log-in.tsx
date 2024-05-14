@@ -9,15 +9,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from './ui/card';
+} from '@/components/ui/card';
 import { OAuthButton } from './oauth-button';
-import { Separator } from './ui/separator';
-import { Label } from './ui/label';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
-import { OTPInput } from './ui/otp-input';
-import { Link } from './ui/link';
-import { Logo } from './icons/logo';
+import { Separator } from '@/components/ui/separator';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { OTPInput } from '@/components/ui/otp-input';
+import { Link } from '@/components/ui/link';
+import { Logo } from '@/components/icons/logo';
 
 export function LogIn() {
   return (

@@ -1,6 +1,6 @@
-import { Logo } from '../icons/logo';
-import { Link } from '../ui/link';
-import { LinkButton } from '../ui/link-button';
+import { Logo } from '@/components/icons/logo';
+import { Link } from '@/components/ui/link';
+import { LinkButton } from '@/components/ui/link-button';
 
 export function Header() {
   return (

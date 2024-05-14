@@ -9,15 +9,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from './ui/card';
-import { Logo } from './icons/logo';
+} from '@/components/ui/card';
+import { Logo } from '@/components/icons/logo';
 import { OAuthButton } from './oauth-button';
-import { Separator } from './ui/separator';
-import { Label } from './ui/label';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
-import { Link } from './ui/link';
-import { OTPInput } from './ui/otp-input';
+import { Separator } from '@/components/ui/separator';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Link } from '@/components/ui/link';
+import { OTPInput } from '@/components/ui/otp-input';
 import { toast } from 'sonner';
 
 export function SignUp() {

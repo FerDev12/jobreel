@@ -1,5 +1,5 @@
 import * as Clerk from '@clerk/elements/common';
-import { Button, ButtonProps } from './ui/button';
+import { Button, ButtonProps } from '@/components/ui/button';
 
 type OAuthButtonProps = ButtonProps & {
   provider: Clerk.ConnectionProps['name'];
