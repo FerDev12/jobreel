@@ -1,7 +1,7 @@
 'use client';
 
 import * as Clerk from '@clerk/elements/common';
-import * as ClerkSignIn from '@clerk/elements/sign-in';
+import * as ClerkSignUp from '@clerk/elements/sign-up';
 import {
   Card,
   CardContent,
@@ -10,33 +10,32 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
+import { Logo } from './icons/logo';
 import { OAuthButton } from './oauth-button';
 import { Separator } from './ui/separator';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { OTPInput } from './ui/otp-input';
 import { Link } from './ui/link';
-import { Logo } from './icons/logo';
+import { OTPInput } from './ui/otp-input';
+import { toast } from 'sonner';
 
-export function LogIn() {
+export function SignUp() {
   return (
-    <ClerkSignIn.Root path={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL}>
+    <ClerkSignUp.Root path='/sign-up'>
       <Clerk.GlobalError>
-        {({ message }: any) => console.log(message)}
+        {({ message }: any) => (message ? toast.error(message) : null)}
       </Clerk.GlobalError>
 
       <Clerk.Loading>
         {(GlobalIsLoading) => (
           <>
-            <ClerkSignIn.Step name='start'>
-              <Card className='max-w-lg w-full'>
+            <ClerkSignUp.Step name='start'>
+              <Card className='max-w-lg w-full '>
                 <CardHeader className='items-center'>
                   <Logo className='mb-4' />
-                  <CardTitle>Log in</CardTitle>
-                  <CardDescription>
-                    To continue to your account.
-                  </CardDescription>
+                  <CardTitle>Sign up</CardTitle>
+                  <CardDescription>To create your account</CardDescription>
                 </CardHeader>
 
                 <CardContent className='space-y-6'>
@@ -71,33 +70,51 @@ export function LogIn() {
                     </span>
                   </div>
 
-                  <Clerk.Field name='identifier' className='space-y-2'>
+                  <div className='flex flex-col sm:flex-row items-center gap-4'>
+                    <Clerk.Field name='firstName' className='w-full space-y-2'>
+                      <Clerk.Label asChild>
+                        <Label>First Name</Label>
+                      </Clerk.Label>
+
+                      <Clerk.Input type='text' required asChild>
+                        <Input className='w-full' />
+                      </Clerk.Input>
+
+                      <FieldError />
+                    </Clerk.Field>
+
+                    <Clerk.Field name='lastName' className='w-full space-y-2'>
+                      <Clerk.Label asChild>
+                        <Label>Last Name</Label>
+                      </Clerk.Label>
+
+                      <Clerk.Input type='text' required asChild>
+                        <Input className='w-full' />
+                      </Clerk.Input>
+
+                      <FieldError />
+                    </Clerk.Field>
+                  </div>
+
+                  <Clerk.Field name='emailAddress' className='space-y-2'>
                     <Clerk.Label asChild>
                       <Label>Email Address</Label>
                     </Clerk.Label>
 
-                    <Clerk.Input type='email' name='email' required asChild>
+                    <Clerk.Input type='email' required asChild>
                       <Input />
                     </Clerk.Input>
 
-                    <Clerk.FieldError>
-                      {({ message, code }: any) => (
-                        <span
-                          data-error-code={code}
-                          className='text-destructive text-sm'
-                        >
-                          {message}
-                        </span>
-                      )}
-                    </Clerk.FieldError>
+                    <FieldError />
                   </Clerk.Field>
                 </CardContent>
 
                 <CardFooter className='flex-col items-start space-y-4'>
-                  <ClerkSignIn.Action submit asChild>
+                  <ClerkSignUp.Action submit asChild>
                     <Clerk.Loading>
                       {(loading) => (
                         <Button
+                          size='lg'
                           variant='brand'
                           loading={loading}
                           disabled={GlobalIsLoading}
@@ -107,27 +124,81 @@ export function LogIn() {
                         </Button>
                       )}
                     </Clerk.Loading>
-                  </ClerkSignIn.Action>
+                  </ClerkSignUp.Action>
 
                   <Link
-                    href='/sign-up'
+                    href='/log-in'
                     className='text-sm text-muted-foreground'
                   >
-                    Don&apos;t have an account?
+                    Have an account?
                   </Link>
                 </CardFooter>
               </Card>
-            </ClerkSignIn.Step>
+            </ClerkSignUp.Step>
 
-            <ClerkSignIn.Step name='verifications'>
-              <ClerkSignIn.Strategy name='email_code'>
+            <ClerkSignUp.Step name='continue'>
+              <Card className='max-w-lg w-full'>
+                <CardHeader className='items-center'>
+                  <Logo className='mb-4' />
+                  <CardTitle>Fill in missing fields</CardTitle>
+                </CardHeader>
+
+                <CardContent className='space-y-4'>
+                  <div className='flex flex-col sm:flex-row items-center gap-4'>
+                    <Clerk.Field name='firstName' className='space-y-2 w-full'>
+                      <Clerk.Label asChild>
+                        <Label>First Name</Label>
+                      </Clerk.Label>
+
+                      <Clerk.Input type='text' required asChild>
+                        <Input className='w-full' />
+                      </Clerk.Input>
+
+                      <FieldError />
+                    </Clerk.Field>
+
+                    <Clerk.Field name='lastName' className='space-y-2 w-full'>
+                      <Clerk.Label asChild>
+                        <Label>Last Name</Label>
+                      </Clerk.Label>
+
+                      <Clerk.Input type='text' required asChild>
+                        <Input className='w-full' />
+                      </Clerk.Input>
+
+                      <FieldError />
+                    </Clerk.Field>
+                  </div>
+                </CardContent>
+
+                <CardFooter>
+                  <ClerkSignUp.Action submit asChild>
+                    <Clerk.Loading>
+                      {(loading) => (
+                        <Button
+                          size='lg'
+                          variant='brand'
+                          loading={loading}
+                          disabled={GlobalIsLoading}
+                          className='w-full'
+                        >
+                          Continue
+                        </Button>
+                      )}
+                    </Clerk.Loading>
+                  </ClerkSignUp.Action>
+                </CardFooter>
+              </Card>
+            </ClerkSignUp.Step>
+
+            <ClerkSignUp.Step name='verifications'>
+              <ClerkSignUp.Strategy name='email_code'>
                 <Card className='max-w-md w-full'>
                   <CardHeader className='items-center'>
                     <Logo className='mb-4' />
                     <CardTitle>Verify your account</CardTitle>
                     <CardDescription>
-                      Enter the 6 digit code sent to{' '}
-                      <ClerkSignIn.SafeIdentifier />.
+                      Enter the 6-digit code sent to your email
                     </CardDescription>
                   </CardHeader>
 
@@ -139,19 +210,10 @@ export function LogIn() {
 
                       <OTPInput />
 
-                      <Clerk.FieldError>
-                        {({ message, code }: any) => (
-                          <span
-                            data-error-code={code}
-                            className='text-destructive text-sm'
-                          >
-                            {message}
-                          </span>
-                        )}
-                      </Clerk.FieldError>
+                      <FieldError />
                     </Clerk.Field>
 
-                    <ClerkSignIn.Action
+                    <ClerkSignUp.Action
                       resend
                       asChild
                       fallback={({ resendableAfter }) => (
@@ -172,35 +234,49 @@ export function LogIn() {
                       <Button
                         variant='link'
                         size='sm'
-                        className='px-0'
+                        className='px-0 text-base text-muted-foreground'
                         disabled={GlobalIsLoading}
                       >
                         Didn&apos;t recieve a code? Resend
                       </Button>
-                    </ClerkSignIn.Action>
+                    </ClerkSignUp.Action>
                   </CardContent>
 
                   <CardFooter>
-                    <ClerkSignIn.Action submit asChild>
+                    <ClerkSignUp.Action submit asChild>
                       <Clerk.Loading>
                         {(loading) => (
                           <Button
+                            size='lg'
                             variant='brand'
                             loading={loading}
                             disabled={GlobalIsLoading}
+                            className='w-full'
                           >
                             Verify
                           </Button>
                         )}
                       </Clerk.Loading>
-                    </ClerkSignIn.Action>
+                    </ClerkSignUp.Action>
                   </CardFooter>
                 </Card>
-              </ClerkSignIn.Strategy>
-            </ClerkSignIn.Step>
+              </ClerkSignUp.Strategy>
+            </ClerkSignUp.Step>
           </>
         )}
       </Clerk.Loading>
-    </ClerkSignIn.Root>
+    </ClerkSignUp.Root>
+  );
+}
+
+function FieldError() {
+  return (
+    <Clerk.FieldError>
+      {({ message, code }: any) => (
+        <span data-error-code={code} className='text-destructive text-sm'>
+          {message}
+        </span>
+      )}
+    </Clerk.FieldError>
   );
 }

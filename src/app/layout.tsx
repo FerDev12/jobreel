@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Roboto as FontSans } from 'next/font/google';
+import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -8,7 +8,6 @@ import { Providers } from '@/components/providers';
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['100', '300', '500', '700', '900'],
 });
 
 export const metadata: Metadata = {

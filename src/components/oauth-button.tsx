@@ -9,7 +9,12 @@ type OAuthButtonProps = ButtonProps & {
 export function OAuthButton({ provider, name, ...props }: OAuthButtonProps) {
   return (
     <Clerk.Connection name={provider} asChild>
-      <Button variant='outline' className='w-full font-medium' {...props}>
+      <Button
+        size='lg'
+        variant='outline'
+        className='w-full font-medium'
+        {...props}
+      >
         <Clerk.Icon className='w-4 h-4 mr-4' /> Continue with {name}
       </Button>
     </Clerk.Connection>
