@@ -41,14 +41,14 @@ export function Footer() {
       <div className='flex flex-col items-center container'>
         <div className='mb-12'>
           <FooterLink href='/'>
-            <Logo className='scale-110' />
+            <Logo />
           </FooterLink>
         </div>
 
         <div className='hidden sm:grid grid-cols-4 justify-items-center w-full'>
           {navigationLinks.map((navLink) => (
             <section key={navLink.id}>
-              <h4 className='text-xl font-semibold mb-4'>{navLink.title}</h4>
+              <h4 className='text-lg font-semibold mb-4'>{navLink.title}</h4>
 
               <nav>
                 <ul className='space-y-2'>
@@ -79,7 +79,7 @@ export function Footer() {
         <Separator className='bg-muted-foreground my-8' />
 
         <div className='flex items-center justify-between w-full'>
-          <p className='text-muted-foreground font-medium'>
+          <p className='text-sm text-muted-foreground font-medium'>
             &copy; {year} Jobreel, Inc.
           </p>
 
@@ -109,7 +109,7 @@ function FooterLink({ children, href }: FooterLinkProps) {
   return (
     <Link
       href={href}
-      className='py-1 rounded-full text-lg font-medium text-muted-foreground transition-colors hover:text-brand active:text-brand/90 '
+      className='py-1 rounded-full text-base font-medium text-muted-foreground transition-colors hover:text-brand active:text-brand/90 '
     >
       {children}
     </Link>

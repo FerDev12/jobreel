@@ -10,7 +10,7 @@ export function OAuthButton({ provider, name, ...props }: OAuthButtonProps) {
   return (
     <Clerk.Connection name={provider} asChild>
       <Button
-        size='lg'
+        size='sm'
         variant='outline'
         className='w-full font-medium'
         {...props}

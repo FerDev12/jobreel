@@ -76,6 +76,10 @@ export const profiles = pgTable('profiles', {
 
 export const addresses = pgTable('addresses', {
   id: uuid('id').primaryKey().defaultRandom(),
+  street: text('street').notNull(),
+  street2: text('street_2'),
+  extNumber: text('exterior_number').notNull(),
+  interiorNumber: text('interior_number'),
   city: text('city').notNull(),
   state: text('state').notNull(),
   country: text('country').notNull(),
@@ -156,6 +160,24 @@ export const reelTags = pgTable(
     unq: unique('reel_tag').on(t.reelId, t.tagId),
   })
 );
+
+export const businesses = pgTable('businesses', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  clerkId: text('clerk_id').notNull().unique(),
+  name: text('name').notNull(),
+  description: text('description'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+export const jobs = pgTable('jobs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  title: text('title').notNull(),
+  description: text('description').notNull(),
+  addressId: uuid('address_id').references(() => addresses.id, {
+    onDelete: 'set null',
+  }),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   profile: one(profiles),

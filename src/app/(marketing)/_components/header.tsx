@@ -7,7 +7,7 @@ export function Header() {
     <header className='sticky top-0 h-20'>
       <div className='flex items-center justify-between container h-full'>
         <Link href='/'>
-          <Logo className='scale-110' />
+          <Logo />
         </Link>
 
         <div className='flex items-center space-x-2'>

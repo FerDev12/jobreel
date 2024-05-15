@@ -31,7 +31,7 @@ export function SignUp() {
         {(GlobalIsLoading) => (
           <>
             <ClerkSignUp.Step name='start'>
-              <Card className='max-w-lg w-full '>
+              <Card className='max-w-md w-full '>
                 <CardHeader className='items-center'>
                   <Logo className='mb-4' />
                   <CardTitle>Sign up</CardTitle>
@@ -114,7 +114,6 @@ export function SignUp() {
                     <Clerk.Loading>
                       {(loading) => (
                         <Button
-                          size='lg'
                           variant='brand'
                           loading={loading}
                           disabled={GlobalIsLoading}
@@ -137,7 +136,7 @@ export function SignUp() {
             </ClerkSignUp.Step>
 
             <ClerkSignUp.Step name='continue'>
-              <Card className='max-w-lg w-full'>
+              <Card className='max-w-md w-full'>
                 <CardHeader className='items-center'>
                   <Logo className='mb-4' />
                   <CardTitle>Fill in missing fields</CardTitle>
@@ -221,7 +220,7 @@ export function SignUp() {
                           variant='link'
                           size='sm'
                           disabled
-                          className='px-0'
+                          className='px-0 text-sm font-normal'
                         >
                           Didn&apos;t recieve a code? Resend (
                           <span className='tabular-nums'>
@@ -234,7 +233,7 @@ export function SignUp() {
                       <Button
                         variant='link'
                         size='sm'
-                        className='px-0 text-base text-muted-foreground'
+                        className='px-0 text-sm font-normal text-muted-foreground'
                         disabled={GlobalIsLoading}
                       >
                         Didn&apos;t recieve a code? Resend

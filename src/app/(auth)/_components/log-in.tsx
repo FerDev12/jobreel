@@ -30,7 +30,7 @@ export function LogIn() {
         {(GlobalIsLoading) => (
           <>
             <ClerkSignIn.Step name='start'>
-              <Card className='max-w-lg w-full'>
+              <Card className='max-w-md w-full'>
                 <CardHeader className='items-center'>
                   <Logo className='mb-4' />
                   <CardTitle>Log in</CardTitle>
@@ -159,7 +159,7 @@ export function LogIn() {
                           variant='link'
                           size='sm'
                           disabled
-                          className='px-0'
+                          className='px-0 text-sm font-normal text-muted-foreground'
                         >
                           Didn&apos;t recieve a code? Resend (
                           <span className='tabular-nums'>
@@ -172,7 +172,7 @@ export function LogIn() {
                       <Button
                         variant='link'
                         size='sm'
-                        className='px-0'
+                        className='px-0 text-sm font-normal text-muted-foreground'
                         disabled={GlobalIsLoading}
                       >
                         Didn&apos;t recieve a code? Resend
