@@ -6,11 +6,11 @@ import { notFound } from 'next/navigation';
 
 export default async function MainLayout({
   app,
-  setup,
+  welcome,
   children,
 }: {
   app: ReactNode;
-  setup: ReactNode;
+  welcome: ReactNode;
   children: ReactNode;
 }) {
   const { userId } = auth().protect();
@@ -21,12 +21,5 @@ export default async function MainLayout({
     return notFound();
   }
 
-  return (
-    <>
-      <MainHeader />
-      <main className='container min-h-screen/header'>
-        {user.profile ? app : setup}
-      </main>
-    </>
-  );
+  return <>{user ? welcome : app}</>;
 }

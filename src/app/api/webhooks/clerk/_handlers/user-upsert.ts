@@ -14,6 +14,7 @@ import { clerkClient } from '@clerk/nextjs/server';
 import { and, eq, notInArray } from 'drizzle-orm';
 import { revalidateTag } from 'next/cache';
 import 'server-only';
+import { profiles } from '@/db/schema';
 
 export async function handleUserUpsert(clerkId: string) {
   const clerkUser = await clerkClient.users.getUser(clerkId);
@@ -38,6 +39,8 @@ export async function handleUserUpsert(clerkId: string) {
   const { db, pool } = getTransactionalClient();
 
   try {
+    let dbPhones: { id: string; clerkId: string }[] = [];
+
     await db.transaction(async (tx) => {
       const [dbUser] = await tx
         .insert(users)
@@ -56,95 +59,118 @@ export async function handleUserUpsert(clerkId: string) {
           verified: email.verification?.status === 'verified',
         }));
 
-      const phoneNumbersData: NewPhoneNumber[] = clerkUser.phoneNumbers.map(
-        (phone) => ({
-          userId: dbUser.id,
-          clerkId: phone.id,
-          phoneNumber: phone.phoneNumber,
-          verified: phone.verification?.status === 'verified',
-        })
-      );
-
       const parsedEmailAddressesData = insertEmailAddressSchema
         .array()
+        .min(1)
         .safeParse(emailAddressesData);
 
       if (!parsedEmailAddressesData.success) {
         throw new Error(parsedEmailAddressesData.error.issues[0].message);
       }
 
-      const parsedPhoneNumbersData = insertPhoneNumberSchema
-        .array()
-        .safeParse(phoneNumbersData);
-
-      if (!parsedPhoneNumbersData.success) {
-        throw new Error(parsedPhoneNumbersData.error.issues[0].message);
-      }
-
-      const [dbEmailsRes, dbPhoneNumbersRes] = await Promise.allSettled([
-        tx
-          .insert(emailAddresses)
-          .values(parsedEmailAddressesData.data)
-          .onConflictDoUpdate({
-            target: emailAddresses.clerkId,
-            set: { verified: true },
+      if (clerkUser.phoneNumbers.length > 0) {
+        const phoneNumbersData: NewPhoneNumber[] = clerkUser.phoneNumbers.map(
+          (phone) => ({
+            userId: dbUser.id,
+            clerkId: phone.id,
+            phoneNumber: phone.phoneNumber,
+            verified: phone.verification?.status === 'verified',
           })
-          .returning({
-            id: emailAddresses.id,
-            clerkId: emailAddresses.clerkId,
-          }),
-        tx
+        );
+
+        const parsedPhoneNumbersData = insertPhoneNumberSchema
+          .array()
+          .min(1)
+          .safeParse(phoneNumbersData);
+
+        if (!parsedPhoneNumbersData.success) {
+          throw new Error(parsedPhoneNumbersData.error.issues[0].message);
+        }
+
+        dbPhones = await tx
           .insert(phoneNumbers)
           .values(parsedPhoneNumbersData.data)
           .onConflictDoUpdate({
             target: phoneNumbers.clerkId,
             set: { verified: true },
           })
-          .returning({ id: phoneNumbers.id, clerkId: phoneNumbers.clerkId }),
-      ]);
-
-      if (dbEmailsRes.status === 'rejected') {
-        throw new Error(dbEmailsRes.reason);
+          .returning({ id: phoneNumbers.id, clerkId: phoneNumbers.clerkId });
       }
 
-      if (dbPhoneNumbersRes.status === 'rejected') {
-        throw new Error(dbPhoneNumbersRes.reason);
-      }
-
-      const dbEmails = dbEmailsRes.value;
-      const dbPhones = dbPhoneNumbersRes.value;
+      const dbEmails = await tx
+        .insert(emailAddresses)
+        .values(parsedEmailAddressesData.data)
+        .onConflictDoUpdate({
+          target: emailAddresses.clerkId,
+          set: { verified: true },
+        })
+        .returning({
+          id: emailAddresses.id,
+          clerkId: emailAddresses.clerkId,
+        });
 
       const primaryEmailAddress = dbEmails.find(
         (email) => email.clerkId === clerkUser.primaryEmailAddressId
       );
+
       const primaryPhoneNumber = dbPhones.find(
-        (phone) => phone.clerkId === clerkUser.primaryPhoneNumberId
+        (phone) => phone.clerkId === clerkUser.id
       );
 
-      await Promise.allSettled([
-        tx.update(users).set({
-          primaryEmailAddressId: primaryEmailAddress?.id,
-          primaryPhoneNumberId: primaryPhoneNumber?.id,
-        }),
-        tx.delete(emailAddresses).where(
-          and(
-            eq(emailAddresses.userId, dbUser.id),
-            notInArray(
-              emailAddresses.clerkId,
-              dbEmails.map((e) => e.clerkId)
+      if (!dbPhones.length) {
+        await Promise.all([
+          tx
+            .insert(profiles)
+            .values({ userId: dbUser.id })
+            .onConflictDoNothing({
+              target: profiles.userId,
+            }),
+          tx.update(users).set({
+            primaryEmailAddressId: primaryEmailAddress?.id,
+            primaryPhoneNumberId: primaryPhoneNumber?.id,
+          }),
+          tx.delete(emailAddresses).where(
+            and(
+              eq(emailAddresses.userId, dbUser.id),
+              notInArray(
+                emailAddresses.clerkId,
+                dbEmails.map((e) => e.clerkId)
+              )
             )
-          )
-        ),
-        tx.delete(phoneNumbers).where(
-          and(
-            eq(phoneNumbers.userId, dbUser.id),
-            notInArray(
-              phoneNumbers.clerkId,
-              dbPhones.map((p) => p.clerkId)
+          ),
+        ]);
+      } else {
+        await Promise.all([
+          tx
+            .insert(profiles)
+            .values({ userId: dbUser.id })
+            .onConflictDoNothing({
+              target: profiles.userId,
+            }),
+          tx.update(users).set({
+            primaryEmailAddressId: primaryEmailAddress?.id,
+            primaryPhoneNumberId: primaryPhoneNumber?.id,
+          }),
+          tx.delete(emailAddresses).where(
+            and(
+              eq(emailAddresses.userId, dbUser.id),
+              notInArray(
+                emailAddresses.clerkId,
+                dbEmails.map((e) => e.clerkId)
+              )
             )
-          )
-        ),
-      ]);
+          ),
+          tx.delete(phoneNumbers).where(
+            and(
+              eq(phoneNumbers.userId, dbUser.id),
+              notInArray(
+                phoneNumbers.clerkId,
+                dbPhones.map((p) => p.clerkId)
+              )
+            )
+          ),
+        ]);
+      }
     });
 
     revalidateTag(`user-${clerkId}`);

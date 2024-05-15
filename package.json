@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "ngrok": "ngrok http --domain=sure-equipped-tadpole.ngrok-free.app 3000"
   },
   "dependencies": {
     "@clerk/elements": "^0.4.0",

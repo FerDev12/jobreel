@@ -36,7 +36,7 @@ export async function getUserWithProfile(clerkId: string) {
     async (clerkId: string) =>
       await preparedGetUserWithProfile.execute({ clerkId }),
     ['user_with_profile'],
-    { tags: [`user-${clerkId}`] }
+    { tags: [`user-${clerkId}`], revalidate: 10 }
   );
 
   return await fetchUserWithProfile(clerkId);

@@ -7,7 +7,7 @@ export function MainHeader() {
     <header className='sticky h-16 shadow'>
       <div className='flex items-center justify-between container h-full'>
         <Link href='/jobs'>
-          <Logo />
+          <Logo className='scale-75' />
         </Link>
 
         <UserButton />
