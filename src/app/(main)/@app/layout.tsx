@@ -10,5 +10,5 @@ export default function AppLayout({
 }) {
   const { orgId } = auth().protect();
 
-  return <>{!!orgId ? seeker : business}</>;
+  return <>{!orgId ? seeker : business}</>;
 }
