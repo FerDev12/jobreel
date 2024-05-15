@@ -1,7 +1,8 @@
 import { Webhook } from 'svix';
 import { headers } from 'next/headers';
 import { WebhookEvent } from '@clerk/nextjs/server';
-import { handleUserDeleted, handleUserUpsert } from './_handlers';
+import { handleUserUpsert } from './_handlers/user-upsert';
+import { handleUserDeleted } from './_handlers/user-deleted';
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook

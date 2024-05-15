@@ -1,3 +1,4 @@
+import { withUt } from 'uploadthing/tw';
 import type { Config } from 'tailwindcss';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 
@@ -106,4 +107,4 @@ const config = {
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;
 
-export default config;
+export default withUt(config);

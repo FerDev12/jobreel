@@ -47,7 +47,7 @@ export const emailAddresses = pgTable('email_addresses', {
 export const phoneNumbers = pgTable('phone_numbers', {
   id: uuid('phone_numbers').primaryKey().defaultRandom(),
   clerkId: text('clerk_id').notNull().unique(),
-  phoneNumber: text('phone_numbers').notNull().unique(),
+  phoneNumber: text('phone_number j').notNull().unique(),
   verified: boolean('verified').notNull().default(false),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 

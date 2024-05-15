@@ -13,6 +13,7 @@ import {
 import { getTransactionalClient } from '@/db/transactional-client';
 import { clerkClient } from '@clerk/nextjs/server';
 import { and, eq, notInArray } from 'drizzle-orm';
+import { revalidateTag } from 'next/cache';
 import 'sever-only';
 
 export async function handleUserUpsert(clerkId: string) {
@@ -146,12 +147,11 @@ export async function handleUserUpsert(clerkId: string) {
         ),
       ]);
     });
+
+    revalidateTag(`user-${clerkId}`);
   } catch (err: any) {
+    throw err;
   } finally {
     await pool.end();
   }
-}
-
-export async function handleUserDeleted(clerkId: string) {
-  await db.delete(users).where(eq(users.clerkId, clerkId));
 }
