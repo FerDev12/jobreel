@@ -10,7 +10,7 @@ export function Header() {
           <Logo />
         </Link>
 
-        <div className='flex items-center space-x-2'>
+        <div className='hidden sm:flex items-center space-x-2'>
           <LinkButton href='/log-in' size='lg' variant='ghost'>
             Log In
           </LinkButton>

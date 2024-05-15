@@ -24,7 +24,9 @@ export default async function MainLayout({
   return (
     <>
       <MainHeader />
-      <main className='min-h-screen/header'>{user.profile ? app : setup}</main>
+      <main className='container min-h-screen/header'>
+        {user.profile ? app : setup}
+      </main>
     </>
   );
 }

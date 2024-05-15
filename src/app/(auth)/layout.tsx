@@ -1,9 +1,11 @@
 import { ReactNode } from 'react';
+import { Header } from '../(marketing)/_components/header';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <main className='h-screen flex items-center justify-center'>
+      <Header />
+      <main className='flex items-center justify-center container h-screen/header'>
         {children}
       </main>
     </>

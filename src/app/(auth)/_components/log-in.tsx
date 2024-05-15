@@ -30,16 +30,16 @@ export function LogIn() {
         {(GlobalIsLoading) => (
           <>
             <ClerkSignIn.Step name='start'>
-              <Card className='max-w-md w-full'>
-                <CardHeader className='items-center'>
-                  <Logo className='mb-4' />
+              <Card className='max-w-md w-full shadow-none border-0 sm:shadow-md sm:border-card'>
+                <CardHeader className='items-center px-0 sm:px-4'>
+                  <Logo className='mb-4 scale-75' />
                   <CardTitle>Log in</CardTitle>
                   <CardDescription>
                     To continue to your account.
                   </CardDescription>
                 </CardHeader>
 
-                <CardContent className='space-y-6'>
+                <CardContent className='space-y-6 px-0 sm:px-4'>
                   <div className='space-y-2'>
                     <OAuthButton
                       provider='apple'
@@ -93,7 +93,7 @@ export function LogIn() {
                   </Clerk.Field>
                 </CardContent>
 
-                <CardFooter className='flex-col items-start space-y-4'>
+                <CardFooter className='flex-col items-start space-y-4 px-0 sm:px-4'>
                   <ClerkSignIn.Action submit asChild>
                     <Clerk.Loading>
                       {(loading) => (
@@ -121,9 +121,9 @@ export function LogIn() {
 
             <ClerkSignIn.Step name='verifications'>
               <ClerkSignIn.Strategy name='email_code'>
-                <Card className='max-w-md w-full'>
-                  <CardHeader className='items-center'>
-                    <Logo className='mb-4' />
+                <Card className='max-w-md w-full shadow-none border-0 sm:shadow-md md:border-card'>
+                  <CardHeader className='items-center px-0 sm:px-4'>
+                    <Logo className='mb-4 scale-75' />
                     <CardTitle>Verify your account</CardTitle>
                     <CardDescription>
                       Enter the 6 digit code sent to{' '}
@@ -131,7 +131,7 @@ export function LogIn() {
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className='space-y-4'>
+                  <CardContent className='space-y-4 px-0 sm:px-4'>
                     <Clerk.Field name='code' className='space-y-2'>
                       <Clerk.Label asChild>
                         <Label>Code</Label>
@@ -180,7 +180,7 @@ export function LogIn() {
                     </ClerkSignIn.Action>
                   </CardContent>
 
-                  <CardFooter>
+                  <CardFooter className='px-0 sm:px-4'>
                     <ClerkSignIn.Action submit asChild>
                       <Clerk.Loading>
                         {(loading) => (

@@ -1,3 +1,7 @@
+import { auth } from '@clerk/nextjs/server';
+
 export default function SetupPage() {
-  return <></>;
+  auth().protect();
+
+  return <>Setup</>;
 }

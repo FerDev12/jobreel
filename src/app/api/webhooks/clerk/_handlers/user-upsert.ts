@@ -1,14 +1,14 @@
 import {
-  NewEmailAddress,
   NewPhoneNumber,
-  NewUser,
+  insertPhoneNumberSchema,
+  phoneNumbers,
+} from '@/db/schema/phone-numbers';
+import {
+  NewEmailAddress,
   emailAddresses,
   insertEmailAddressSchema,
-  insertPhoneNumberSchema,
-  insertUserSchema,
-  phoneNumbers,
-  users,
-} from '@/db/schema';
+} from '@/db/schema/email-addresses';
+import { NewUser, insertUserSchema, users } from '@/db/schema/users';
 import { getTransactionalClient } from '@/db/transactional-client';
 import { clerkClient } from '@clerk/nextjs/server';
 import { and, eq, notInArray } from 'drizzle-orm';
