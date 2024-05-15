@@ -1,4 +1,3 @@
-import { db } from '@/db/http-client';
 import {
   NewEmailAddress,
   NewPhoneNumber,
@@ -14,7 +13,7 @@ import { getTransactionalClient } from '@/db/transactional-client';
 import { clerkClient } from '@clerk/nextjs/server';
 import { and, eq, notInArray } from 'drizzle-orm';
 import { revalidateTag } from 'next/cache';
-import 'sever-only';
+import 'server-only';
 
 export async function handleUserUpsert(clerkId: string) {
   const clerkUser = await clerkClient.users.getUser(clerkId);
