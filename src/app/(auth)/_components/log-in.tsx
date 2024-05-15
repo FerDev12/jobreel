@@ -32,7 +32,6 @@ export function LogIn() {
             <ClerkSignIn.Step name='start'>
               <Card className='max-w-md w-full shadow-none border-0 sm:shadow-md sm:border-card'>
                 <CardHeader className='items-center px-0 sm:px-4'>
-                  <Logo className='mb-4 scale-75' />
                   <CardTitle>Log in</CardTitle>
                   <CardDescription>
                     To continue to your account.
@@ -123,7 +122,6 @@ export function LogIn() {
               <ClerkSignIn.Strategy name='email_code'>
                 <Card className='max-w-md w-full shadow-none border-0 sm:shadow-md md:border-card'>
                   <CardHeader className='items-center px-0 sm:px-4'>
-                    <Logo className='mb-4 scale-75' />
                     <CardTitle>Verify your account</CardTitle>
                     <CardDescription>
                       Enter the 6 digit code sent to{' '}

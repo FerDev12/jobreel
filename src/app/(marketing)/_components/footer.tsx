@@ -4,6 +4,13 @@ import { Logo } from '@/components/icons/logo';
 import { ReactNode } from 'react';
 import { Link } from '@/components/ui/link';
 import { LinkButton } from '@/components/ui/link-button';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Copyright } from '@/components/common/copyright';
 
 const navigationLinks = [
   {
@@ -38,14 +45,14 @@ export function Footer() {
 
   return (
     <footer className='py-8 sm:py-16 bg-primary rounded-t-3xl sm:rounded-t-[8rem] text-background'>
-      <div className='flex flex-col items-center container'>
+      <div className='hidden sm:flex flex-col items-center container'>
         <div className='mb-12'>
           <FooterLink href='/'>
             <Logo />
           </FooterLink>
         </div>
 
-        <div className='hidden sm:grid grid-cols-4 justify-items-center w-full'>
+        <div className='grid grid-cols-4 justify-items-center w-full'>
           {navigationLinks.map((navLink) => (
             <section key={navLink.id}>
               <h4 className='text-lg font-semibold mb-4'>{navLink.title}</h4>
@@ -79,9 +86,7 @@ export function Footer() {
         <Separator className='bg-muted-foreground my-8' />
 
         <div className='flex items-center justify-between w-full'>
-          <p className='text-sm text-muted-foreground font-medium'>
-            &copy; {year} Jobreel, Inc.
-          </p>
+          <Copyright />
 
           <div className='flex items-center space-x-2'>
             <FooterLink href='/'>
@@ -94,6 +99,48 @@ export function Footer() {
               <Linkedin className='w-5 h-5' />
             </FooterLink>
           </div>
+        </div>
+      </div>
+
+      <div className='flex sm:hidden flex-col items-center space-y-4 w-full container'>
+        <Logo className='scale-90' />
+        <Accordion type='multiple' className='w-full'>
+          {navigationLinks.map((navLink) => (
+            <AccordionItem key={navLink.id} value={navLink.title}>
+              <AccordionTrigger>{navLink.title}</AccordionTrigger>
+
+              <AccordionContent>
+                <nav>
+                  <ul className='space-y-2'>
+                    {navLink.links.map((link) => (
+                      <li
+                        key={link.href}
+                        className='text-base font-medium text-muted-foreground'
+                      >
+                        <Link href={link.href}>{link.label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+
+        <div className='flex flex-col items-center justify-center space-y-2'>
+          <div className='flex items-center space-x-2'>
+            <FooterLink href='#'>
+              <Instagram className='w-5 h-5' />
+            </FooterLink>
+            <FooterLink href='#'>
+              <Facebook className='w-5 h-5' />
+            </FooterLink>
+            <FooterLink href='#'>
+              <Linkedin className='w-5 h-5' />
+            </FooterLink>
+          </div>
+
+          <Copyright />
         </div>
       </div>
     </footer>

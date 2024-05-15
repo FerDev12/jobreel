@@ -11,6 +11,7 @@ const preparedGetUserWithProfile = db.query.users
       firstName: true,
       lastName: true,
       username: true,
+      imageUrl: true,
     },
     where: (user, { eq }) => eq(user.clerkId, sql.placeholder('clerkId')),
     with: {

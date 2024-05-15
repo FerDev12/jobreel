@@ -1,6 +1,7 @@
 import { Logo } from '@/components/icons/logo';
 import { Link } from '@/components/ui/link';
 import { LinkButton } from '@/components/ui/link-button';
+import { MobileMenu } from './mobile-menu';
 
 export function Header() {
   return (
@@ -18,6 +19,8 @@ export function Header() {
             Sign Up
           </LinkButton>
         </div>
+
+        <MobileMenu />
       </div>
     </header>
   );
