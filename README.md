@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Jobreel
 
-## Getting Started
+> By Fernando Muñoz
 
-First, run the development server:
+### Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js
+- TailwindCSS
+- Typescript
+- Shadcn UI
+- Drizzle ORM
+- NeonDB (Serverless Postgres)
+- Clerk
+- Uploadthing (File Storage)
+- pnpm
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Install dependencies
+  ```
+  $ pnpm install
+  ```
+- Create <code>.env</code> at the project's root and copy the template variables from <code>.env.template</code>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Create Clerk app at <a href='https://clerk.com'>Clerk</a> select require "name" and "username" fields and and enable the following sign-up options:
 
-## Learn More
+  - Email Address
+  - Google
+  - Apple
+  - LinkedIn
+  - Facebook
 
-To learn more about Next.js, take a look at the following resources:
+- Create a webhook endpoint in Clerk that listens for all "user" events. You will also need an ngrok url to tunnel the webhook requests from clerk to your local development server.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Copy your Clerk credentials and add them to <code>.env</code> file.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Configure database schema
+  ```
+  $ pnpm db:push
+  ```
+- Start the development server
+  ```
+  $ pnpm dev
+  ```
+- Open Ngrok tunnel
+  ```
+  ngrok http --domain=YOUR_NGROK_DOMAIN 3000
+  ```
