@@ -17,7 +17,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { OTPInput } from '@/components/ui/otp-input';
 import { Link } from '@/components/ui/link';
-import { Logo } from '@/components/icons/logo';
 
 export function LogIn() {
   return (
@@ -48,11 +47,6 @@ export function LogIn() {
                     <OAuthButton
                       provider='google'
                       name='Google'
-                      disabled={GlobalIsLoading}
-                    />
-                    <OAuthButton
-                      provider='linkedin'
-                      name='LinkedIn'
                       disabled={GlobalIsLoading}
                     />
                     <OAuthButton

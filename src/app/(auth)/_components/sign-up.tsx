@@ -50,11 +50,6 @@ export function SignUp() {
                       disabled={GlobalIsLoading}
                     />
                     <OAuthButton
-                      provider='linkedin'
-                      name='LinkedIn'
-                      disabled={GlobalIsLoading}
-                    />
-                    <OAuthButton
                       provider='facebook'
                       name='Facebook'
                       disabled={GlobalIsLoading}
