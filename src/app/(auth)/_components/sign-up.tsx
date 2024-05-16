@@ -24,7 +24,7 @@ export function SignUp() {
   return (
     <ClerkSignUp.Root path='/sign-up'>
       <Clerk.GlobalError>
-        {({ message }: any) => (message ? toast.error(message) : null)}
+        {({ message }: any) => toast.error(message)}
       </Clerk.GlobalError>
 
       <Clerk.Loading>
