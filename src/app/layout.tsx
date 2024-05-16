@@ -4,6 +4,7 @@ import './globals.css';
 import { cn } from '@/lib/utils/cn';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Providers } from '@/components/providers';
+import { Banner } from './(marketing)/_components/banner';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -34,7 +35,10 @@ export default function RootLayout({
             fontSans.variable
           )}
         >
-          <Providers>{children}</Providers>
+          <Providers>
+            <Banner />
+            {children}
+          </Providers>
         </body>
       </html>
     </ClerkProvider>

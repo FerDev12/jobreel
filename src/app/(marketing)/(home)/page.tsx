@@ -11,15 +11,15 @@ export default function Home() {
   return (
     <div className='container space-y-16 sm:space-y-32 pb-16 sm:pb-32'>
       <section id='hero' className='grid sm:grid-cols-2 place-items-center'>
-        <div className='justify-self-end flex flex-col space-y-4'>
-          <h1 className='text-4xl sm:text-6xl font-semibold'>
+        <div className='justify-self-end flex flex-col space-y-4 mb-8 sm:mb-0'>
+          <h1 className='text-center sm:text-start text-4xl sm:text-6xl font-semibold'>
             Hire people, <br /> not a resume.
           </h1>
-          <p className='text-lg text-muted-foreground'>
+          <p className='text-center sm:text-start text-lg text-muted-foreground'>
             Easily collect and review video applications on Jobreel.
           </p>
 
-          <div>
+          <div className='flex justify-center sm:justify-start'>
             <LinkButton href='/sign-up' variant='brand' className='group'>
               Get Started{' '}
               <ArrowRight className='w-4 h-4 mr-2 group-hover:translate-x-0.5 transition-transform' />
