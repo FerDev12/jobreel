@@ -11,7 +11,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@clerk/elements": "^0.4.4",
+    "@clerk/elements": "0.4.0",
     "@clerk/nextjs": "^5.0.12",
     "@neondatabase/serverless": "^0.9.3",
     "@radix-ui/react-accordion": "^1.1.2",

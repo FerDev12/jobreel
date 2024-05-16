@@ -5,7 +5,6 @@ const isProtectedRoute = createRouteMatcher(['/app(.*)', '/welcome(.*)']);
 const isAuthRoute = createRouteMatcher(['/log-in(.*)', '/sign-up(.*)']);
 
 export default clerkMiddleware((auth, req) => {
-  console.log('middleware', req.nextUrl.pathname);
   if (isProtectedRoute(req)) auth().protect();
   if (isAuthRoute(req)) {
     const { userId } = auth();

@@ -20,9 +20,11 @@ import { Link } from '@/components/ui/link';
 import { OTPInput } from '@/components/ui/otp-input';
 import { toast } from 'sonner';
 
+const SIGN_UP_URL = process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL;
+
 export function SignUp() {
   return (
-    <ClerkSignUp.Root path='/sign-up'>
+    <ClerkSignUp.Root path={SIGN_UP_URL}>
       <Clerk.GlobalError>
         {({ message }: any) => toast.error(message)}
       </Clerk.GlobalError>
