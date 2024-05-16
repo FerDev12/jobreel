@@ -113,7 +113,7 @@ export function LogIn() {
 
             <ClerkSignIn.Step name='verifications'>
               <ClerkSignIn.Strategy name='email_code'>
-                <Card className='max-w-md w-full border-none shadow-sm sm:border-card sm:shadow-md'>
+                <Card className='max-w-md w-full border-none shadow-none sm:border-card sm:shadow-md'>
                   <CardHeader className='items-center px-0 sm:px-4'>
                     <Logo className='sm:hidden scale-75' />
                     <CardTitle>Verify your account</CardTitle>
