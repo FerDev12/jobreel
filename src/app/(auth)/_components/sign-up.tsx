@@ -233,7 +233,7 @@ export function SignUp() {
                     </ClerkSignUp.Action>
                   </CardContent>
 
-                  <CardFooter className='px-0 sm:px-4'>
+                  <CardFooter className='flex-col space-y-2 px-0 sm:px-4'>
                     <ClerkSignUp.Action submit asChild>
                       <Clerk.Loading>
                         {(loading) => (
@@ -248,6 +248,16 @@ export function SignUp() {
                           </Button>
                         )}
                       </Clerk.Loading>
+                    </ClerkSignUp.Action>
+
+                    <ClerkSignUp.Action navigate='start' asChild>
+                      <Button
+                        size='sm'
+                        variant='ghost'
+                        className='w-full font-normal'
+                      >
+                        Cancel
+                      </Button>
                     </ClerkSignUp.Action>
                   </CardFooter>
                 </Card>

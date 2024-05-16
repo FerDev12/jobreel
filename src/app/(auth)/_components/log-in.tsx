@@ -26,8 +26,8 @@ export function LogIn() {
     <ClerkSignIn.Root path={SIGN_IN_URL}>
       <Clerk.GlobalError>
         {({ message, code }: any) => {
-          toast.error(message);
           console.error('GLOBAL', code, message);
+          return toast.error(message);
         }}
       </Clerk.GlobalError>
 
@@ -162,7 +162,7 @@ export function LogIn() {
                     </ClerkSignIn.Action>
                   </CardContent>
 
-                  <CardFooter className='px-0 sm:px-4'>
+                  <CardFooter className='flex-col space-y-2 px-0 sm:px-4'>
                     <ClerkSignIn.Action submit asChild>
                       <Clerk.Loading>
                         {(loading) => (
@@ -177,6 +177,16 @@ export function LogIn() {
                           </Button>
                         )}
                       </Clerk.Loading>
+                    </ClerkSignIn.Action>
+
+                    <ClerkSignIn.Action navigate='start' asChild>
+                      <Button
+                        size='sm'
+                        variant='ghost'
+                        className='w-full font-normal'
+                      >
+                        Cancel
+                      </Button>
                     </ClerkSignIn.Action>
                   </CardFooter>
                 </Card>
