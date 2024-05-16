@@ -264,7 +264,10 @@ function FieldError() {
   return (
     <Clerk.FieldError>
       {({ message, code }: any) => (
-        <span data-error-code={code} className='text-destructive text-sm'>
+        <span
+          data-error-code={code}
+          className='inline-block mt-2 text-destructive text-sm'
+        >
           {message}
         </span>
       )}

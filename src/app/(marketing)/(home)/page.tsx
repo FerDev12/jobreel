@@ -6,23 +6,40 @@ import { ArrowRight } from 'lucide-react';
 import { Reviews } from '../_components/reviews';
 import fakeReviews from '../../../../data/fake-reviews.json';
 import { Logo } from '@/components/icons/logo';
+import { cn } from '@/lib/utils/cn';
 
 export default function Home() {
   return (
-    <div className='container space-y-16 sm:space-y-32 pb-16 sm:pb-32'>
-      <section id='hero' className='grid sm:grid-cols-2 place-items-center'>
-        <div className='justify-self-end flex flex-col space-y-4 mb-8 sm:mb-0'>
-          <h1 className='text-center sm:text-start text-4xl sm:text-6xl font-semibold'>
-            Hire people, <br /> not a resume.
-          </h1>
-          <p className='text-center sm:text-start text-lg text-muted-foreground'>
-            Easily collect and review video applications on Jobreel.
-          </p>
+    <div className='relative container space-y-16 sm:space-y-32 pb-16 sm:pb-32'>
+      <section
+        id='hero'
+        className='relative grid sm:grid-cols-2 place-items-center'
+      >
+        <div className='justify-self-end flex flex-col space-y-4 sm:space-y-8 mb-8 sm:mb-0'>
+          <div className='clip'>
+            <h1
+              className={cn(
+                'text-center sm:text-start text-4xl sm:text-6xl leading-loose tracking-tighter font-bold'
+              )}
+            >
+              Hire people, <br /> not a resume.
+            </h1>
+          </div>
+          <div className='clip'>
+            <p className=' tracking-wide font-medium text-center sm:text-start text-lg sm:text-xl max-w-[32ch] text-muted-foreground'>
+              Easily collect and review video applications on Jobreel.
+            </p>
+          </div>
 
           <div className='flex justify-center sm:justify-start'>
-            <LinkButton href='/sign-up' variant='brand' className='group'>
+            <LinkButton
+              href='/sign-up'
+              size='lg'
+              variant='brand'
+              className='group'
+            >
               Get Started{' '}
-              <ArrowRight className='w-4 h-4 mr-2 group-hover:translate-x-0.5 transition-transform' />
+              <ArrowRight className='w-4 h-4 ml-2 group-hover:translate-x-0.5 transition-transform' />
             </LinkButton>
           </div>
         </div>

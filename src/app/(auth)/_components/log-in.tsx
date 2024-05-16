@@ -17,12 +17,18 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { OTPInput } from '@/components/ui/otp-input';
 import { Link } from '@/components/ui/link';
+import { toast } from 'sonner';
+
+const SIGN_IN_URL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL;
 
 export function LogIn() {
   return (
-    <ClerkSignIn.Root path={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL}>
+    <ClerkSignIn.Root path={SIGN_IN_URL}>
       <Clerk.GlobalError>
-        {({ message }: any) => console.log(message)}
+        {({ message, code }: any) => {
+          toast.error(message);
+          console.error('GLOBAL', code, message);
+        }}
       </Clerk.GlobalError>
 
       <Clerk.Loading>
@@ -69,25 +75,16 @@ export function LogIn() {
                       <Label>Email Address</Label>
                     </Clerk.Label>
 
-                    <Clerk.Input type='email' name='email' required asChild>
+                    <Clerk.Input asChild>
                       <Input />
                     </Clerk.Input>
 
-                    <Clerk.FieldError>
-                      {({ message, code }: any) => (
-                        <span
-                          data-error-code={code}
-                          className='text-destructive text-sm'
-                        >
-                          {message}
-                        </span>
-                      )}
-                    </Clerk.FieldError>
+                    <FieldError />
                   </Clerk.Field>
                 </CardContent>
 
                 <CardFooter className='flex-col items-start space-y-4 px-0 sm:px-4'>
-                  <ClerkSignIn.Action submit asChild>
+                  <ClerkSignIn.Action name='identifier' submit asChild>
                     <Clerk.Loading>
                       {(loading) => (
                         <Button
@@ -114,12 +111,14 @@ export function LogIn() {
 
             <ClerkSignIn.Step name='verifications'>
               <ClerkSignIn.Strategy name='email_code'>
-                <Card className='max-w-md w-full shadow-none border-0 sm:shadow-md md:border-card'>
+                <Card className='max-w-md w-full border-none shadow-sm sm:border-card sm:shadow-md'>
                   <CardHeader className='items-center px-0 sm:px-4'>
                     <CardTitle>Verify your account</CardTitle>
-                    <CardDescription>
-                      Enter the 6 digit code sent to{' '}
-                      <ClerkSignIn.SafeIdentifier />.
+                    <CardDescription className='text-center'>
+                      Enter the 6-digit code sent to <br />
+                      <span className='font-medium'>
+                        <ClerkSignIn.SafeIdentifier />
+                      </span>
                     </CardDescription>
                   </CardHeader>
 
@@ -131,16 +130,7 @@ export function LogIn() {
 
                       <OTPInput />
 
-                      <Clerk.FieldError>
-                        {({ message, code }: any) => (
-                          <span
-                            data-error-code={code}
-                            className='text-destructive text-sm'
-                          >
-                            {message}
-                          </span>
-                        )}
-                      </Clerk.FieldError>
+                      <FieldError />
                     </Clerk.Field>
 
                     <ClerkSignIn.Action
@@ -151,7 +141,7 @@ export function LogIn() {
                           variant='link'
                           size='sm'
                           disabled
-                          className='px-0 text-sm font-normal text-muted-foreground'
+                          className='px-0 text-sm font-normal'
                         >
                           Didn&apos;t recieve a code? Resend (
                           <span className='tabular-nums'>
@@ -177,9 +167,11 @@ export function LogIn() {
                       <Clerk.Loading>
                         {(loading) => (
                           <Button
+                            size='lg'
                             variant='brand'
                             loading={loading}
                             disabled={GlobalIsLoading}
+                            className='w-full'
                           >
                             Verify
                           </Button>
@@ -194,5 +186,22 @@ export function LogIn() {
         )}
       </Clerk.Loading>
     </ClerkSignIn.Root>
+  );
+}
+
+function FieldError() {
+  return (
+    <Clerk.FieldError>
+      {({ message, code }: any) => {
+        return (
+          <span
+            data-error-code={code}
+            className='inline-block mt-2 text-destructive text-sm'
+          >
+            {message}
+          </span>
+        );
+      }}
+    </Clerk.FieldError>
   );
 }

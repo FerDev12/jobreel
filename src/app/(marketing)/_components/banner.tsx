@@ -13,7 +13,7 @@ export function Banner() {
   useEffect(() => {
     timeout.current = setTimeout(() => {
       setShow(true);
-    }, 5000);
+    }, 3000);
 
     return () => {
       if (timeout.current) {
