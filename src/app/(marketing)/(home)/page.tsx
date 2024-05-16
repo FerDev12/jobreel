@@ -48,12 +48,12 @@ export default function Home() {
 
       <section id='reviews'>
         <div className='mb-8 sm:mb-16 text-center'>
-          <h2 className='text-4xl sm:text-5xl font-semibold mb-6'>
+          <h2 className='text-3xl sm:text-5xl font-semibold mb-2 sm:mb-6'>
             Join The Community
           </h2>
-          <p className='flex items-center justify-center text-lg text-muted-foreground'>
-            Thousands are using <Logo className='w-14 mx-2' /> to hire and get
-            hired
+          <p className='flex items-center justify-center text-base sm:text-lg text-muted-foreground'>
+            Thousands are using
+            <Logo className='inline w-10 sm:w-14 mx-2' /> to hire and get hired
           </p>
         </div>
         <Reviews reviews={fakeReviews} />
