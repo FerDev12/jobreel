@@ -126,10 +126,13 @@ export async function handleUserUpsert(clerkId: string) {
             .onConflictDoNothing({
               target: profiles.userId,
             }),
-          tx.update(users).set({
-            primaryEmailAddressId: primaryEmailAddress?.id,
-            primaryPhoneNumberId: primaryPhoneNumber?.id,
-          }),
+          tx
+            .update(users)
+            .set({
+              primaryEmailAddressId: primaryEmailAddress?.id,
+              primaryPhoneNumberId: primaryPhoneNumber?.id,
+            })
+            .where(eq(users.id, dbUser.id)),
           tx.delete(emailAddresses).where(
             and(
               eq(emailAddresses.userId, dbUser.id),
@@ -148,10 +151,13 @@ export async function handleUserUpsert(clerkId: string) {
             .onConflictDoNothing({
               target: profiles.userId,
             }),
-          tx.update(users).set({
-            primaryEmailAddressId: primaryEmailAddress?.id,
-            primaryPhoneNumberId: primaryPhoneNumber?.id,
-          }),
+          tx
+            .update(users)
+            .set({
+              primaryEmailAddressId: primaryEmailAddress?.id,
+              primaryPhoneNumberId: primaryPhoneNumber?.id,
+            })
+            .where(eq(users.id, dbUser.id)),
           tx.delete(emailAddresses).where(
             and(
               eq(emailAddresses.userId, dbUser.id),

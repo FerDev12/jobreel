@@ -41,8 +41,6 @@ const navigationLinks = [
 ];
 
 export function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className='py-8 sm:py-16 bg-primary rounded-t-3xl sm:rounded-t-[8rem] text-background'>
       <div className='hidden sm:flex flex-col items-center container'>

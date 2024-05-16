@@ -2,12 +2,13 @@ import Image from 'next/image';
 import { ReactNode } from 'react';
 import img from '../../../public/home_header.png';
 import { Logo } from '@/components/icons/logo';
+import { ClerkProvider } from '@clerk/nextjs';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   const year = new Date().getFullYear();
 
   return (
-    <>
+    <ClerkProvider>
       <main className='grid sm:grid-cols-2 place-items-center h-screen'>
         <div className='hidden sm:block relative container h-full bg-[#030337]'>
           <div className='flex flex-col items-center justify-center h-full'>
@@ -28,6 +29,6 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           {children}
         </div>
       </main>
-    </>
+    </ClerkProvider>
   );
 }
