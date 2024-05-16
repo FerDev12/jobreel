@@ -28,6 +28,7 @@ export async function handleUserUpsert(clerkId: string) {
     firstName: clerkUser.firstName,
     lastName: clerkUser.lastName,
     username: clerkUser.username,
+    imageUrl: clerkUser.imageUrl,
   };
 
   const parsedUserData = insertUserSchema.safeParse(userData);

@@ -1,16 +1,14 @@
-import { ReactNode } from 'react';
-import { MainHeader } from './_components/header';
 import { auth } from '@clerk/nextjs/server';
+import { ReactNode } from 'react';
 import { getUserWithProfile } from '@/data';
-import { notFound } from 'next/navigation';
 
-export default async function MainLayout({
-  app,
+export default async function AppLayout({
   welcome,
+  main,
   children,
 }: {
-  app: ReactNode;
   welcome: ReactNode;
+  main: ReactNode;
   children: ReactNode;
 }) {
   const { userId } = auth().protect();
@@ -18,8 +16,8 @@ export default async function MainLayout({
   const user = await getUserWithProfile(userId);
 
   if (!user) {
-    return notFound();
+    return welcome;
   }
 
-  return <>{user ? welcome : app}</>;
+  return main;
 }

@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getUserWithProfile } from '@/data';
 import { auth } from '@clerk/nextjs/server';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 export default async function ProfilePage() {
@@ -15,16 +14,17 @@ export default async function ProfilePage() {
 
   const initials = `${user.firstName?.charAt(0)}${user.lastName?.charAt(0)}`;
   return (
-    <div>
-      <Avatar>
-        <AvatarImage src={user.imageUrl ?? undefined} asChild>
-          {user.imageUrl && <Image src={user.imageUrl} alt='profile' />}
-        </AvatarImage>
+    <div className='flex items-center space-x-4'>
+      <Avatar className='aspect-square w-16 h-16'>
+        <AvatarImage src={user.imageUrl ?? undefined} />
         <AvatarFallback className='uppercase'>{initials}</AvatarFallback>
       </Avatar>
-      <p className='text-lg font-medium capitalize'>
-        {user.firstName} {user.lastName}
-      </p>
+      <div>
+        <p className='text-lg font-semibold capitalize'>
+          {user.firstName} {user.lastName}
+        </p>
+        <p>{user.primaryEmailAddress?.emailAddress}</p>
+      </div>
     </div>
   );
 }

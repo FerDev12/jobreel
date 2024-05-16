@@ -1,6 +1,6 @@
 import { Logo } from '@/components/icons/logo';
 import { Link } from '@/components/ui/link';
-import { UserButton } from '@clerk/nextjs';
+import { UserButton } from './user-button';
 
 export function MainHeader() {
   return (

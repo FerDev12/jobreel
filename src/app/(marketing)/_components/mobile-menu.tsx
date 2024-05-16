@@ -17,7 +17,7 @@ export function MobileMenu() {
     <Sheet>
       <SheetTrigger className='sm:hidden' asChild>
         <Button size='icon' variant='ghost'>
-          <MenuIcon className='w-5 h-5' />
+          <MenuIcon className='w-7 h-7' />
         </Button>
       </SheetTrigger>
       <SheetContent side='right'>

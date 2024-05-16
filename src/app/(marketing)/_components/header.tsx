@@ -2,10 +2,13 @@ import { Logo } from '@/components/icons/logo';
 import { Link } from '@/components/ui/link';
 import { LinkButton } from '@/components/ui/link-button';
 import { MobileMenu } from './mobile-menu';
+import { HeaderShadow } from './header-shadow';
 
 export function Header() {
   return (
-    <header className='sticky top-0 h-20'>
+    <header className='sticky top-0 h-20 z-50'>
+      <HeaderShadow />
+
       <div className='flex items-center justify-between container h-full'>
         <Link href='/'>
           <Logo />
