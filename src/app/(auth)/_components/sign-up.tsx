@@ -33,6 +33,7 @@ export function SignUp() {
             <ClerkSignUp.Step name='start'>
               <Card className='max-w-md w-full border-0 shadow-none sm:border-caard sm:shadow-md'>
                 <CardHeader className='items-center px-0 sm:px-4'>
+                  <Logo className='sm:hidden scale-75' />
                   <CardTitle>Sign up</CardTitle>
                   <CardDescription>To create your account</CardDescription>
                 </CardHeader>
@@ -187,6 +188,7 @@ export function SignUp() {
               <ClerkSignUp.Strategy name='email_code'>
                 <Card className='max-w-md w-full border-none shadow-sm sm:border-card sm:shadow-md'>
                   <CardHeader className='items-center px-0 sm:px-4'>
+                    <Logo className='sm:hidden scale-75' />
                     <CardTitle>Verify your account</CardTitle>
                     <CardDescription>
                       Enter the 6-digit code sent to your email

@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { OTPInput } from '@/components/ui/otp-input';
 import { Link } from '@/components/ui/link';
 import { toast } from 'sonner';
+import { Logo } from '@/components/icons/logo';
 
 const SIGN_IN_URL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL;
 
@@ -37,6 +38,7 @@ export function LogIn() {
             <ClerkSignIn.Step name='start'>
               <Card className='max-w-md w-full shadow-none border-0 sm:shadow-md sm:border-card'>
                 <CardHeader className='items-center px-0 sm:px-4'>
+                  <Logo className='sm:hidden scale-75' />
                   <CardTitle>Log in</CardTitle>
                   <CardDescription>
                     To continue to your account.
@@ -113,6 +115,7 @@ export function LogIn() {
               <ClerkSignIn.Strategy name='email_code'>
                 <Card className='max-w-md w-full border-none shadow-sm sm:border-card sm:shadow-md'>
                   <CardHeader className='items-center px-0 sm:px-4'>
+                    <Logo className='sm:hidden scale-75' />
                     <CardTitle>Verify your account</CardTitle>
                     <CardDescription className='text-center'>
                       Enter the 6-digit code sent to <br />
