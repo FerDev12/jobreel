@@ -26,7 +26,6 @@ export default async function ProfilePage() {
           {user.firstName} {user.lastName}
         </p>
         <p>{user.primaryEmailAddress?.emailAddress}</p>
-        <UploadJobreelButton />
       </div>
     </div>
   );
