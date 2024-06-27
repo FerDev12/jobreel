@@ -1,3 +1,4 @@
+import { UploadJobreelButton } from '@/components/common/upload-button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getUserWithProfile } from '@/data';
 import { auth } from '@clerk/nextjs/server';
@@ -13,6 +14,7 @@ export default async function ProfilePage() {
   }
 
   const initials = `${user.firstName?.charAt(0)}${user.lastName?.charAt(0)}`;
+
   return (
     <div className='flex items-center space-x-4'>
       <Avatar className='aspect-square w-16 h-16'>
@@ -24,6 +26,7 @@ export default async function ProfilePage() {
           {user.firstName} {user.lastName}
         </p>
         <p>{user.primaryEmailAddress?.emailAddress}</p>
+        <UploadJobreelButton />
       </div>
     </div>
   );
